@@ -7,11 +7,11 @@ buildOptions = dict(packages=[], excludes=[])
 base = 'Console'
 
 executables = [
-    Executable('stat-script.py', base=base, targetName='stat-script')
+    Executable('wavystats.py', base=base, targetName='wavystats')
 ]
 
-setup(name='stat-script',
-      version='0.1.6',
+setup(name='wavystats',
+      version='0.1.1',
       description='A dirty but dep-less way to stat your targets',
       options=dict(build_exe=buildOptions),
       executables=executables)

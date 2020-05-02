@@ -6,7 +6,7 @@ import argparse
 import subprocess
 
 
-EXCLUDE_PATHS = ('proc', 'sys', 'usr/local/stat-script', 'usr/bin/stat-script')
+EXCLUDE_PATHS = ('proc', 'sys', 'usr/local/wavystats', 'usr/bin/wavystats')
 DIFF_EXCLUDE_PATHS = ('/build/', '/srcdest/', '/startdir/', '/logdest/')
 
 

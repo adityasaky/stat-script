@@ -1,4 +1,3 @@
-# stat-script
+# wavystats
 
-A quick and dirty dep-less way to recursively stat specified targets. Packaged
-for Arch Linux.
+Part of the wavybuilds project.
