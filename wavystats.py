@@ -97,6 +97,37 @@ def find_owners(diff_file_path, target_path):
     _dump_target(ownership, target_path)
 
 
+def find_owner_contribution(owner_path, target_path):
+    # FIXME: use defaultdict here?
+    contribution_count = {}
+
+    print('Calculating contribution...')
+
+    special_hierarchies = ('/usr/bin/', '/usr/lib/', '/usr/lib32/', '/usr/lib64/', '/usr/include/', '/usr/share/', '/etc/')
+
+    with open(owner_path) as fp:
+        ownership = json.load(fp)
+
+    for path in ownership:
+        if isinstance(ownership[path], list):
+            if not path.startswith(special_hierarchies):
+                if ownership[path][0] not in contribution_count:
+                    contribution_count[ownership[path][0]] = {}
+                contribution_count[ownership[path][0]][path] = 1
+            for hier in special_hierarchies:
+                if path.startswith(hier):
+                    if ownership[path][0] not in contribution_count:
+                        contribution_count[ownership[path][0]] = {}
+                    if hier in contribution_count[ownership[path][0]]:
+                        contribution_count[ownership[path][0]][hier] += 1
+                    else:
+                        contribution_count[ownership[path][0]][hier] = 1
+                    break
+        # FIXME what about the unknowns
+
+    _dump_target(contribution_count, target_path)
+
+
 def main():
     parser = argparse.ArgumentParser(description='Granular stats for better provenance')
 
@@ -111,11 +142,14 @@ def main():
     parser.add_argument('-o', '--find-owners', action='store_true', dest='find_owners_flag')
     parser.add_argument('--diff-file', type=str, dest='diff_file_path')
 
+    parser.add_argument('-c', '--find-owner-contribution', action='store_true', dest='find_owner_contribution_flag')
+    parser.add_argument('--owner', type=str, dest='owner_path')
+
     parser.add_argument('-t', '--target', type=str, dest='target_path')
 
     args = parser.parse_args()
 
-    if not args.record_flag and not args.diff_flag and not args.find_owners_flag:
+    if not args.record_flag and not args.diff_flag and not args.find_owners_flag and not args.find_owner_contribution_flag:
         raise RuntimeError('select an operation')
 
     if args.record_flag:
@@ -126,6 +160,9 @@ def main():
 
     if args.find_owners_flag:
         find_owners(args.diff_file_path, args.target_path)
+
+    if args.find_owner_contribution_flag:
+        find_owner_contribution(args.owner_path, args.target_path)
 
 
 if __name__ == '__main__':

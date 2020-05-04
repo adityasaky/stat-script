@@ -1,7 +1,7 @@
 # Maintainer: Aditya Sirish <aditya.sirish@nyu.edu>
 
 pkgname=('wavystats')
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="A dirty but dep-less way to stat your targets"
 arch=('any')

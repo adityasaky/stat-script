@@ -11,7 +11,7 @@ executables = [
 ]
 
 setup(name='wavystats',
-      version='0.1.1',
+      version='0.1.2-1',
       description='A dirty but dep-less way to stat your targets',
       options=dict(build_exe=buildOptions),
       executables=executables)
